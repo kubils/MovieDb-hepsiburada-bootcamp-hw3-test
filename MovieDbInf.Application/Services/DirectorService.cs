@@ -38,9 +38,16 @@ namespace MovieDbInf.Application.Services
         }
 
 
-        public Task Update(int id, UpdateDirectorDto director)
+        public void Update(int id, UpdateDirectorDto directorDto)
         {
-            throw new NotImplementedException();
+            var updatedGenre =  _directorRepository.Get(id);
+            
+            var mappedGenre = _mapper.Map<UpdateDirectorDto>(directorDto);
+
+            updatedGenre.Result.First_name = mappedGenre.First_name;
+            updatedGenre.Result.Last_name = mappedGenre.Last_name;
+            
+            _directorRepository.Update(updatedGenre.Result);
         }
 
         public async Task<List<DirectorDto>> GetAll()

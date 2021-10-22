@@ -21,6 +21,7 @@ namespace MovieDbInf.Application
             CreateMap<Domain.Entities.Genre, UpdateGenreDto>();
 
             CreateMap<DirectorDto, Domain.Entities.Director>().ReverseMap();
+            CreateMap<UpdateDirectorDto, Domain.Entities.Director>().ReverseMap();
 
         }
     }

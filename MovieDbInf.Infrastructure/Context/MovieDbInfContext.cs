@@ -11,7 +11,7 @@ namespace MovieDbInf.Infrastructure.Context
 {
     public class MovieDbInfContext : DbContext
     {
-        public MovieDbInfContext(DbContextOptions options) : base(options)
+        public MovieDbInfContext(DbContextOptions<MovieDbInfContext> options) : base(options)
         {
         }
 

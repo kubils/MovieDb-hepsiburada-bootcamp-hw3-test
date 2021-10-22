@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using MovieDbInf.Application.Model;
 
 namespace MovieDbInf.Application.IServices
 {
@@ -17,6 +18,8 @@ namespace MovieDbInf.Application.IServices
         Task Update(int id, UpdateMovieDto movie);
 
         Task<List<MovieDto>> GetAll();
+
+        Task<List<MovieDto>> GetByParameters(MovieParameters parameters);
 
         Task<MovieDto> Get(int id);
     }

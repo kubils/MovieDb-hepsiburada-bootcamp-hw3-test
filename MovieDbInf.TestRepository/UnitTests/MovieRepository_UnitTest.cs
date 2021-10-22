@@ -61,19 +61,31 @@ namespace MovieDbInf.TestRepository.UnitTests
             Assert.NotEqual(GetAllMovies(), list);
         }
         
-        //[Fact]
+        [Fact]
         public void Test_Add_Movie_Title_Requirement()
         {
-            var movieDto = GetMovie();
-            var mockMovieService = new Mock<IMovieService>();
-            mockMovieService.Setup(service => service.Add(movieDto)).Returns(Task.FromResult(true));
-            IMovieService courseService = mockMovieService.Object;
-
-            var result = courseService.Add(movieDto);
-            var x = Task.FromResult(result);
+            var movie = GetMovie();
+            var movieList = GetAllMovies();
+            var movieListSize = movieList.Count;
             
-            //Assert.True();
+            var mockMovieService = new Mock<IMovieRepository>();
+          
+            mockMovieService.Setup(repository => repository.Add(It.IsAny<Movie>())).Returns((Movie movie) =>
+            {
+                movieList.Add(movie);
+
+                return Task.FromResult(movieListSize < movieList.Count);
+            });;
+
+            IMovieRepository movieRepository = mockMovieService.Object;
+
+            movieRepository.Add(movie);
+                
+            Assert.NotNull(movie);
+            Assert.True(movieListSize < movieList.Count);
         }
+        
+        
         private List<Movie> GetAllMovies()
         {
             List<Movie> movies = new List<Movie>();
@@ -90,9 +102,9 @@ namespace MovieDbInf.TestRepository.UnitTests
             return movies;
         }
         
-        private MovieDto GetMovie()
+        private Movie GetMovie()
         {
-            MovieDto movie = new MovieDto();
+            Movie movie = new Movie();
             movie.Id = 2;
             movie.Title = $"{1}.title";
             movie.ReleaseDate = 1;

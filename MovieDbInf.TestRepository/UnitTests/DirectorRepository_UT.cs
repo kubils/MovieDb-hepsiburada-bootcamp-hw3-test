@@ -58,7 +58,7 @@ namespace MovieDbInf.TestRepository.UnitTests
             //Act
         
             //Assert
-            Assert.ThrowsAsync<ApplicationException>(async () => await directorService.Update(1, directorDto));
+            Assert.Throws<ApplicationException>( () =>  directorService.Update(1, directorDto));
         }
         
         private List<Director> GetAllDirectors()

@@ -31,7 +31,7 @@ namespace MovieDbInf.Infrastructure.Repository
         public async Task Delete(TEntity entity)
         {
             _dbSet.Remove(entity);
-            await _movieDbContext.SaveChangesAsync();    
+            await _movieDbContext.SaveChangesAsync();
         }
 
         public async Task Update(TEntity entity)
@@ -44,18 +44,18 @@ namespace MovieDbInf.Infrastructure.Repository
         public async Task<TEntity> Get(int id)
         {
             var model = await _dbSet.FindAsync(id);
-  
+
             return model;
         }
-        
+
         public Task<List<TEntity>> GetX(Expression<Func<TEntity, bool>> filter)
         {
             return _dbSet.Where(filter).ToListAsync();
         }
 
-         public async Task<List<TEntity>> GetAll()
-         {
-             var result = await _dbSet.ToListAsync();
+        public async Task<List<TEntity>> GetAll()
+        {
+            var result = await _dbSet.ToListAsync();
             return result;
         }
 

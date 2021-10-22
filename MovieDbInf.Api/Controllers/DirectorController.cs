@@ -82,5 +82,24 @@ namespace MovieDbInf.API.Controllers
 
             }
         }
+        
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] UpdateDirectorDto updateDirectorDto)
+        {
+            _logger.LogInformation("Update method director controller");
+            
+            try
+            {
+                _directorService.Update(id, updateDirectorDto);
+                _logger.LogInformation("Delete method director controller accomplished");
+
+                return Ok(new {status = true, errors = ""});
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+
+            }
+        }
     }
 }

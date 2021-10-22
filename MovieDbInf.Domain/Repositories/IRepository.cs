@@ -19,6 +19,5 @@ namespace MovieDbInf.Domain.Repositories
 
         Task<List<TEntity>> GetAll();
         
-        
     }
 }

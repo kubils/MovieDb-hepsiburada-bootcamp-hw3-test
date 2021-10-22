@@ -18,8 +18,6 @@ namespace MovieDbInf.Application.Dto.Movie
         
         public int ReleaseDate { get; set; }
 
-        public string DirectorLastName { get; set;}
-        
         public int DirectorId { get; set; }
         public int GenreId { get; set; }
         public int CountryId { get; set; }

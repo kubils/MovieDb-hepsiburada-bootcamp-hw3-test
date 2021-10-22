@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using MovieDbInf.Application.Model;
 using MovieDbInf.Domain.Entities;
 
 namespace MovieDbInf.Application.Services
@@ -26,15 +27,18 @@ namespace MovieDbInf.Application.Services
         public async Task Add(MovieDto movieDto)
         {
 
-            var result = _directorRepository.GetX(d => d.Last_name == movieDto.DirectorLastName);
+            var result = _movieRepository.GetX(d => d.Director.Id == movieDto.DirectorId);
 
             if (result.Result != null)
             {
                 Movie movie = _mapper.Map<MovieDto,Movie>(movieDto);
                 await _movieRepository.Add(movie);
             }
+            else
+            {
+               throw new ApplicationException("Movie Not Found");
+            }
 
-            throw new ApplicationException("Director Not Found");
         }
 
         public Task Delete(int id)
@@ -58,9 +62,22 @@ namespace MovieDbInf.Application.Services
             return  _mapper.Map<List<MovieDto>>(result);
         }
 
-        public Task Update(int id, UpdateMovieDto movie)
+        public async Task<List<MovieDto>> GetByParameters(MovieParameters parameters)
         {
-            throw new NotImplementedException();
+            var result =  _movieRepository.GetByParameters(parameters);
+            return  await Task.FromResult(_mapper.Map<List<MovieDto>>(result));
+        }
+        
+        public async Task Update(int id, UpdateMovieDto movieDto)
+        {
+            var updatedGenre =  _movieRepository.Get(id);
+            
+            var mappedGenre = _mapper.Map<UpdateMovieDto>(movieDto);
+
+            updatedGenre.Result.Title = mappedGenre.Title;
+            updatedGenre.Result.ReleaseDate = mappedGenre.ReleaseDate;
+            
+            await _movieRepository.Update(updatedGenre.Result);
         }
     }
 }

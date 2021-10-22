@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MovieDbInf.Application.Dto.Movie;
+using MovieDbInf.Application.Model;
 
 namespace MovieDbInf.API.Controllers
 {
@@ -38,6 +39,19 @@ namespace MovieDbInf.API.Controllers
             return Ok(new { status = true, errors = "" });
         }
 
+        [HttpGet("/getbyparameters")]
+        public async Task<IActionResult> GetByParameters([FromQuery] MovieParameters parameters)
+        {
+            
+            var result =  await _movieService.GetByParameters(parameters);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return NotFound();
+        }
+        
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -50,7 +64,6 @@ namespace MovieDbInf.API.Controllers
 
             return NotFound();
         }
-        
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -72,6 +85,25 @@ namespace MovieDbInf.API.Controllers
             try
             {
                 await _movieService.Delete(id);
+                _logger.LogInformation("Delete method movie controller accomplished");
+
+                return Ok(new {status = true, errors = ""});
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+
+            }
+        }
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateMovieDto updateMovieDto)
+        {
+            _logger.LogInformation("Update method movie controller");
+            
+            try
+            {
+                await _movieService.Update(id, updateMovieDto);
                 _logger.LogInformation("Delete method movie controller accomplished");
 
                 return Ok(new {status = true, errors = ""});

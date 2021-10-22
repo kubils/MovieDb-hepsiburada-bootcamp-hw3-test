@@ -14,7 +14,7 @@ namespace MovieDbInf.Application.IServices
 
         Task Delete(int id);
 
-        Task Update(int id, UpdateGenreDto genre);
+        void Update(int id, UpdateGenreDto genre);
 
         Task<List<GenreDto>> GetAll();
 

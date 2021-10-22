@@ -50,9 +50,15 @@ namespace MovieDbInf.Application.Services
             return _mapper.Map<List<GenreDto>>(result);
         }
 
-        public Task Update(int id, UpdateGenreDto genre)
+        public void Update(int id, UpdateGenreDto genreDto)
         {
-            throw new NotImplementedException();
+            var updatedGenre =  _genreRepository.Get(id);
+            
+            var mappedGenre = _mapper.Map<UpdateGenreDto>(genreDto);
+
+            updatedGenre.Result.Name = mappedGenre.Name;
+            
+            _genreRepository.Update(updatedGenre.Result);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace MovieDbInf.Application.IServices
 
         Task Delete(int id);
 
-        Task Update(int id, UpdateDirectorDto director);
+        void Update(int id, UpdateDirectorDto director);
 
         Task<List<DirectorDto>> GetAll();
 

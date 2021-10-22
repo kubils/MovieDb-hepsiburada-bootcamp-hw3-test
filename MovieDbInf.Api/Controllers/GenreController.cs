@@ -81,5 +81,24 @@ namespace MovieDbInf.API.Controllers
 
             }
         }
+        
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] UpdateGenreDto updateGenreDto)
+        {
+            _logger.LogInformation("Update method genre controller");
+            
+            try
+            {
+                 _genreService.Update(id, updateGenreDto);
+                _logger.LogInformation("Delete method genre controller accomplished");
+
+                return Ok(new {status = true, errors = ""});
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+
+            }
+        }
     }
 }
